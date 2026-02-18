@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JDIH BEM RDM FH UB</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --red-light: #E74C3C;
+    --red-dark: #922B21;
+    --blue: #1A3A6B;
+    --blue-mid: #2155A3;
+    --blue-light: #2E86C1;
+    --white: #FAFAF8;
+    --gray: #F0EFE9;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 64px;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-logo {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--red), var(--blue));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 16px;
+  }
+  .nav-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 18px;
+    color: var(--blue);
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-btn {
+    background: var(--blue); color: white !important;
+    padding: 8px 20px; border-radius: 6px;
+    transition: background 0.2s !important;
+  }
+  .nav-btn:hover { background: var(--blue-mid) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    padding: 80px 48px 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(192,57,43,0.08); color: var(--red);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 28px;
+    width: fit-content;
+  }
+  .hero-tag span { width: 6px; height: 6px; background: var(--red); border-radius: 50%; display: inline-block; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 900; line-height: 1.1;
+    color: var(--blue); margin-bottom: 20px;
+  }
+  h1 em { color: var(--red); font-style: normal; }
+  .hero-sub {
+    font-size: 16px; color: var(--text-muted); line-height: 1.7;
+    max-width: 420px; margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: white;
+    padding: 14px 32px; border-radius: 8px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--blue);
+    padding: 14px 32px; border-radius: 8px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; border: 2px solid var(--blue);
+    cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { background: var(--blue); color: white; }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 900; color: var(--blue);
+    display: block;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  .hero-right {
+    background: linear-gradient(160deg, var(--blue) 0%, var(--blue-mid) 60%, var(--red-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  }
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; gap: 16px;
+    padding: 48px;
+  }
+  .doc-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 16px;
+    color: white; min-width: 300px;
+    animation: floatCard 3s ease-in-out infinite alternate;
+  }
+  .doc-card:nth-child(2) { animation-delay: 0.5s; margin-left: 24px; }
+  .doc-card:nth-child(3) { animation-delay: 1s; }
+  @keyframes floatCard {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+  }
+  .doc-icon {
+    width: 40px; height: 48px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .doc-info { flex: 1; }
+  .doc-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .doc-meta { font-size: 11px; opacity: 0.65; }
+  .doc-badge {
+    font-size: 10px; font-weight: 700;
+    background: rgba(192,57,43,0.6); padding: 3px 8px;
+    border-radius: 4px; letter-spacing: 0.05em;
+  }
+
+  /* SEARCH SECTION */
+  .search-section {
+    background: var(--gray);
+    padding: 64px;
+  }
+  .search-wrap { max-width: 800px; margin: 0 auto; text-align: center; }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 12px; display: block;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 800; color: var(--blue);
+    margin-bottom: 32px; line-height: 1.2;
+  }
+  .search-box {
+    display: flex; gap: 0;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid rgba(26,58,107,0.15);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    transition: border-color 0.2s;
+  }
+  .search-box:focus-within { border-color: var(--blue); }
+  .search-box input {
+    flex: 1; padding: 18px 24px;
+    border: none; outline: none;
+    font-size: 15px; font-family: 'DM Sans', sans-serif;
+    background: transparent; color: var(--text);
+  }
+  .search-box button {
+    background: var(--blue); color: white;
+    border: none; padding: 18px 32px;
+    font-size: 15px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: background 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .search-box button:hover { background: var(--blue-mid); }
+  .search-tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+  .tag {
+    background: white; border: 1px solid rgba(0,0,0,0.1);
+    color: var(--text-muted); font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px; cursor: pointer;
+    transition: all 0.2s; text-decoration: none;
+  }
+  .tag:hover { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* DOCUMENTS GRID */
+  .docs-section { padding: 80px 64px; }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+  .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-tab {
+    padding: 8px 18px; border-radius: 6px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.12); background: white;
+    color: var(--text-muted); transition: all 0.2s;
+  }
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--blue); color: white; border-color: var(--blue);
+  }
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .doc-item {
+    background: white; border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.08);
+    overflow: hidden; transition: all 0.25s;
+    cursor: pointer;
+  }
+  .doc-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(26,58,107,0.12);
+    border-color: rgba(26,58,107,0.2);
+  }
+  .doc-item-top {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+    padding: 28px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .doc-item-top::after {
+    content: ''; position: absolute;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    bottom: -20px; right: -20px;
+  }
+  .doc-type-badge {
+    background: rgba(255,255,255,0.15);
+    color: white; font-size: 10px; font-weight: 700;
+    padding: 4px 10px; border-radius: 4px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .doc-pdf-icon { font-size: 32px; }
+  .doc-item-body { padding: 20px 24px; }
+  .doc-item-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--blue); margin-bottom: 8px; line-height: 1.4;
+  }
+  .doc-item-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+  .doc-item-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .doc-date { font-size: 12px; color: var(--text-muted); }
+  .doc-actions { display: flex; gap: 8px; }
+  .btn-view, .btn-dl {
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.2s; text-decoration: none;
+  }
+  .btn-view { background: rgba(26,58,107,0.08); color: var(--blue); }
+  .btn-view:hover { background: var(--blue); color: white; }
+  .btn-dl { background: rgba(192,57,43,0.08); color: var(--red); }
+  .btn-dl:hover { background: var(--red); color: white; }
+
+  /* PDF VIEWER MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 16px;
+    width: 90vw; max-width: 900px; height: 90vh;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 28px; border-bottom: 1px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--blue); }
+  .modal-close {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--gray); border: none; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--red); color: white; }
+  .modal-body { flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .modal-body iframe { width: 100%; height: 100%; border: none; }
+  .modal-placeholder {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; color: var(--text-muted); text-align: center; padding: 48px;
+  }
+  .modal-placeholder .icon { font-size: 64px; }
+  .modal-placeholder p { font-size: 15px; line-height: 1.6; }
+
+  /* UPLOAD SECTION */
+  .upload-section {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+    padding: 80px 64px; position: relative; overflow: hidden;
+  }
+  .upload-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(192,57,43,0.3) 0%, transparent 60%);
+  }
+  .upload-inner {
+    max-width: 600px; position: relative; z-index: 2;
+  }
+  .upload-inner .section-label { color: rgba(255,255,255,0.6); }
+  .upload-inner h2 { color: white; }
+  .upload-inner p { color: rgba(255,255,255,0.75); font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+  .upload-form {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 32px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
+  .form-group input, .form-group select, .form-group textarea {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 12px 16px; color: white;
+    font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: rgba(255,255,255,0.5);
+  }
+  .form-group select option { background: var(--blue); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .upload-area {
+    border: 2px dashed rgba(255,255,255,0.3); border-radius: 10px;
+    padding: 32px; text-align: center; margin-bottom: 16px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .upload-area:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+  .upload-area .u-icon { font-size: 40px; margin-bottom: 12px; }
+  .upload-area p { color: rgba(255,255,255,0.75); font-size: 14px; }
+  .upload-area span { color: rgba(255,255,255,0.45); font-size: 12px; }
+  .upload-area input[type=file] { display: none; }
+  .admin-note {
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    text-align: center; margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--text); color: rgba(255,255,255,0.7);
+    padding: 48px 64px 28px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-brand .nav-logo { margin-bottom: 16px; }
+  .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+  .footer-col h4 { color: white; font-size: 14px; font-weight: 700; margin-bottom: 16px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; margin-bottom: 8px; transition: color 0.2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { animation: fadeUp 0.6s ease both; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 48px 24px; }
+    .search-section, .docs-section, .upload-section, footer { padding: 48px 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">J</div>
+    <span class="nav-title">JDIH BEM RDM FH UB</span>
+  </div>
+  <div class="nav-links">
+    <a href="#beranda">Beranda</a>
+    <a href="#dokumen">Dokumen</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#upload" class="nav-btn">Admin Upload</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="hero-left">
+    <div class="hero-tag"><span></span>Jaringan Dokumentasi dan Informasi Hukum</div>
+    <h1>Arsip Hukum<br><em>BEM RDM</em><br>FH Universitas Brawijaya</h1>
+    <p class="hero-sub">Pusat dokumentasi dan informasi hukum yang terbuka, transparan, dan mudah diakses oleh seluruh civitas akademika Fakultas Hukum Universitas Brawijaya.</p>
+    <div class="hero-actions">
+      <a href="#dokumen" class="btn-primary">📄 Jelajahi Dokumen</a>
+      <a href="#tentang" class="btn-secondary">Tentang JDIH</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num" id="count-docs">0</span>
+        <div class="stat-label">Dokumen Tersedia</div>
+      </div>
+      <div>
+        <span class="stat-num" id="count-cat">0</span>
+        <div class="stat-label">Kategori</div>
+      </div>
+      <div>
+        <span class="stat-num" id="count-dl">0</span>
+        <div class="stat-label">Total Unduhan</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="doc-card">
+        <div class="doc-icon">📜</div>
+        <div class="doc-info">
+          <div class="doc-title">Peraturan BEM RDM 2024</div>
+          <div class="doc-meta">Diunggah: 10 Jan 2024</div>
+        </div>
+        <div class="doc-badge">PDF</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">⚖️</div>
+        <div class="doc-info">
+          <div class="doc-title">Kode Etik Mahasiswa FH UB</div>
+          <div class="doc-meta">Diunggah: 5 Feb 2024</div>
+        </div>
+        <div class="doc-badge">PDF</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">📋</div>
+        <div class="doc-info">
+          <div class="doc-title">Laporan Tahunan RDM 2023</div>
+          <div class="doc-meta">Diunggah: 1 Mar 2024</div>
+        </div>
+        <div class="doc-badge">PDF</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-section">
+  <div class="search-wrap">
+    <span class="section-label">Pencarian Dokumen</span>
+    <h2>Temukan Dokumen<br>yang Anda Butuhkan</h2>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari nama dokumen, kategori, atau tahun...">
+      <button onclick="searchDocs()">🔍 Cari</button>
+    </div>
+    <div class="search-tags">
+      <a class="tag" onclick="filterDocs('Semua')">Semua</a>
+      <a class="tag" onclick="filterDocs('Peraturan')">Peraturan</a>
+      <a class="tag" onclick="filterDocs('Laporan')">Laporan</a>
+      <a class="tag" onclick="filterDocs('Ketetapan')">Ketetapan</a>
+      <a class="tag" onclick="filterDocs('Surat Keputusan')">Surat Keputusan</a>
+      <a class="tag" onclick="filterDocs('Pedoman')">Pedoman</a>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section class="docs-section" id="dokumen">
+  <div class="section-header">
+    <div>
+      <span class="section-label">Arsip Dokumen</span>
+      <h2>Dokumen Terbaru</h2>
+    </div>
+    <div class="filter-tabs">
+      <div class="filter-tab active" onclick="setFilter(this,'Semua')">Semua</div>
+      <div class="filter-tab" onclick="setFilter(this,'Peraturan')">Peraturan</div>
+      <div class="filter-tab" onclick="setFilter(this,'Laporan')">Laporan</div>
+      <div class="filter-tab" onclick="setFilter(this,'Ketetapan')">Ketetapan</div>
+    </div>
+  </div>
+  <div class="docs-grid" id="docsGrid"></div>
+</section>
+
+<!-- UPLOAD -->
+<section class="upload-section" id="upload">
+  <div class="upload-inner">
+    <span class="section-label">Panel Admin</span>
+    <h2>Upload Dokumen Baru</h2>
+    <p>Khusus untuk admin yang telah ditunjuk. Pastikan dokumen telah diverifikasi sebelum diunggah ke sistem JDIH.</p>
+    <div class="upload-form">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>JUDUL DOKUMEN</label>
+          <input type="text" id="docTitle" placeholder="Masukkan judul dokumen...">
+        </div>
+        <div class="form-group">
+          <label>KATEGORI</label>
+          <select id="docCategory">
+            <option value="">Pilih kategori</option>
+            <option>Peraturan</option>
+            <option>Ketetapan</option>
+            <option>Laporan</option>
+            <option>Surat Keputusan</option>
+            <option>Pedoman</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>TAHUN</label>
+          <input type="number" id="docYear" placeholder="2024" min="2000" max="2030">
+        </div>
+        <div class="form-group full">
+          <label>DESKRIPSI</label>
+          <textarea id="docDesc" placeholder="Deskripsi singkat dokumen..."></textarea>
+        </div>
+      </div>
+      <label class="upload-area" for="pdfFile">
+        <div class="u-icon">📂</div>
+        <p id="fileLabel"><strong>Klik untuk pilih file PDF</strong> atau drag & drop di sini</p>
+        <span>Format: PDF · Maks. 20MB</span>
+        <input type="file" id="pdfFile" accept=".pdf" onchange="handleFile(this)">
+      </label>
+      <button class="btn-primary" style="width:100%; justify-content: center; padding: 16px;" onclick="uploadDoc()">
+        ⬆️ Upload Dokumen
+      </button>
+      <p class="admin-note">🔒 Hanya admin yang ditunjuk yang dapat mengakses fitur ini</p>
+    </div>
+  </div>
+</section>
+
+<!-- TENTANG -->
+<section class="docs-section" id="tentang" style="background: var(--gray);">
+  <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+    <span class="section-label">Tentang Kami</span>
+    <h2>Apa itu JDIH BEM RDM FH UB?</h2>
+    <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 32px;">
+      JDIH (Jaringan Dokumentasi dan Informasi Hukum) merupakan unit dari BEM RDM Fakultas Hukum Universitas Brawijaya yang bertugas menghimpun, mengelola, dan menyebarluaskan dokumentasi serta informasi hukum kepada seluruh civitas akademika. Platform ini hadir sebagai wujud komitmen transparansi dan keterbukaan informasi publik.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left;">
+      <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid rgba(0,0,0,0.07);">
+        <div style="font-size: 28px; margin-bottom: 12px;">📖</div>
+        <div style="font-weight: 700; color: var(--blue); margin-bottom: 8px; font-family: 'Playfair Display', serif;">Terbuka</div>
+        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Seluruh dokumen dapat diakses dan diunduh secara gratis oleh publik.</div>
+      </div>
+      <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid rgba(0,0,0,0.07);">
+        <div style="font-size: 28px; margin-bottom: 12px;">🔍</div>
+        <div style="font-weight: 700; color: var(--blue); margin-bottom: 8px; font-family: 'Playfair Display', serif;">Terorganisir</div>
+        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Dokumen dikelompokkan berdasarkan kategori dan mudah dicari.</div>
+      </div>
+      <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid rgba(0,0,0,0.07);">
+        <div style="font-size: 28px; margin-bottom: 12px;">✅</div>
+        <div style="font-weight: 700; color: var(--blue); margin-bottom: 8px; font-family: 'Playfair Display', serif;">Terpercaya</div>
+        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Semua dokumen telah diverifikasi oleh admin yang bertanggung jawab.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom: 16px;">J</div>
+      <p>JDIH BEM RDM FH UB adalah platform arsip hukum digital untuk Fakultas Hukum Universitas Brawijaya. Terbuka, transparan, dan dapat diakses oleh semua.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <a href="#beranda">Beranda</a>
+      <a href="#dokumen">Dokumen</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#upload">Upload (Admin)</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kategori</h4>
+      <a href="#" onclick="filterDocs('Peraturan')">Peraturan</a>
+      <a href="#" onclick="filterDocs('Ketetapan')">Ketetapan</a>
+      <a href="#" onclick="filterDocs('Laporan')">Laporan</a>
+      <a href="#" onclick="filterDocs('Surat Keputusan')">Surat Keputusan</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 JDIH BEM RDM FH UB. Hak Cipta Dilindungi.</span>
+    <span>Fakultas Hukum · Universitas Brawijaya · Malang</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Judul Dokumen</span>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="modal-placeholder">
+        <div class="icon">📄</div>
+        <p>Pratinjau dokumen akan tampil di sini.<br>Dalam implementasi nyata, PDF akan ditampilkan menggunakan iframe atau PDF.js.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- DATA ---
+  let documents = [
+    { id: 1, title: 'Peraturan Organisasi BEM RDM FH UB 2024', category: 'Peraturan', year: 2024, desc: 'Peraturan dasar organisasi Badan Eksekutif Mahasiswa RDM Fakultas Hukum UB tahun 2024.', date: '10 Jan 2024', downloads: 142, file: null },
+    { id: 2, title: 'Kode Etik Mahasiswa Fakultas Hukum UB', category: 'Pedoman', year: 2024, desc: 'Pedoman etika dan perilaku mahasiswa di lingkungan Fakultas Hukum Universitas Brawijaya.', date: '5 Feb 2024', downloads: 218, file: null },
+    { id: 3, title: 'Laporan Pertanggungjawaban BEM RDM 2023', category: 'Laporan', year: 2023, desc: 'Laporan lengkap pertanggungjawaban kegiatan dan keuangan BEM RDM FH UB tahun 2023.', date: '1 Mar 2024', downloads: 89, file: null },
+    { id: 4, title: 'Ketetapan Musyawarah Besar FH UB 2024', category: 'Ketetapan', year: 2024, desc: 'Kumpulan ketetapan hasil Musyawarah Besar Mahasiswa Fakultas Hukum UB 2024.', date: '15 Mar 2024', downloads: 167, file: null },
+    { id: 5, title: 'Surat Keputusan Pengurus BEM RDM 2024/2025', category: 'Surat Keputusan', year: 2024, desc: 'SK penetapan pengurus Badan Eksekutif Mahasiswa RDM FH UB periode 2024/2025.', date: '20 Apr 2024', downloads: 203, file: null },
+    { id: 6, title: 'Pedoman Kegiatan Kemahasiswaan FH UB', category: 'Pedoman', year: 2024, desc: 'Panduan lengkap pelaksanaan kegiatan kemahasiswaan di Fakultas Hukum Universitas Brawijaya.', date: '5 Mei 2024', downloads: 134, file: null },
+  ];
+
+  let currentFilter = 'Semua';
+
+  // --- RENDER DOCS ---
+  function renderDocs(list) {
+    const grid = document.getElementById('docsGrid');
+    if (!list.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted);">📭 Tidak ada dokumen ditemukan.</div>';
+      return;
+    }
+    grid.innerHTML = list.map(d => `
+      <div class="doc-item">
+        <div class="doc-item-top">
+          <div class="doc-type-badge">${d.category}</div>
+          <div class="doc-pdf-icon">📄</div>
+        </div>
+        <div class="doc-item-body">
+          <div class="doc-item-title">${d.title}</div>
+          <div class="doc-item-desc">${d.desc}</div>
+          <div class="doc-item-footer">
+            <div class="doc-date">📅 ${d.date}</div>
+            <div class="doc-actions">
+              <button class="btn-view" onclick="viewDoc(${d.id})">👁 Lihat</button>
+              <button class="btn-dl" onclick="downloadDoc(${d.id})">⬇ Unduh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function getFilteredDocs() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    return documents.filter(d => {
+      const matchCat = currentFilter === 'Semua' || d.category === currentFilter;
+      const matchQ = !q || d.title.toLowerCase().includes(q) || d.category.toLowerCase().includes(q) || String(d.year).includes(q);
+      return matchCat && matchQ;
+    });
+  }
+
+  function filterDocs(cat) {
+    currentFilter = cat;
+    renderDocs(getFilteredDocs());
+    document.getElementById('dokumen').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function setFilter(el, cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    currentFilter = cat;
+    renderDocs(getFilteredDocs());
+  }
+
+  function searchDocs() {
+    renderDocs(getFilteredDocs());
+    document.getElementById('dokumen').scrollIntoView({ behavior: 'smooth' });
+  }
+  document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchDocs(); });
+
+  // --- VIEW & DOWNLOAD ---
+  function viewDoc(id) {
+    const d = documents.find(x => x.id === id);
+    document.getElementById('modalTitle').textContent = d.title;
+    document.getElementById('modalBody').innerHTML = d.file
+      ? `<iframe src="${d.file}"></iframe>`
+      : `<div class="modal-placeholder"><div class="icon">📄</div><p><strong>${d.title}</strong><br><br>Pratinjau PDF tidak tersedia untuk dokumen demo.<br>Dalam implementasi nyata, PDF yang diunggah akan ditampilkan di sini.</p></div>`;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function downloadDoc(id) {
+    const d = documents.find(x => x.id === id);
+    d.downloads++;
+    if (d.file) {
+      const a = document.createElement('a');
+      a.href = d.file; a.download = d.title + '.pdf'; a.click();
+    } else {
+      alert('📄 ' + d.title + '\n\nDalam implementasi nyata, file PDF akan terunduh otomatis.\nTotal unduhan: ' + d.downloads);
+    }
+    updateStats();
+  }
+
+  function closeModal(e) { if (e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
+  function closeModalBtn() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+  // --- UPLOAD ---
+  function handleFile(input) {
+    const label = document.getElementById('fileLabel');
+    if (input.files[0]) {
+      label.innerHTML = `<strong>✅ ${input.files[0].name}</strong>`;
+    }
+  }
+
+  function uploadDoc() {
+    const title = document.getElementById('docTitle').value.trim();
+    const category = document.getElementById('docCategory').value;
+    const year = document.getElementById('docYear').value;
+    const desc = document.getElementById('docDesc').value.trim();
+    const file = document.getElementById('pdfFile').files[0];
+    if (!title || !category || !year) {
+      alert('⚠️ Harap isi judul, kategori, dan tahun dokumen!'); return;
+    }
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    const fileUrl = file ? URL.createObjectURL(file) : null;
+    const newDoc = {
+      id: documents.length + 1,
+      title, category, year: parseInt(year),
+      desc: desc || 'Dokumen yang diunggah oleh admin.',
+      date: dateStr, downloads: 0, file: fileUrl
+    };
+    documents.unshift(newDoc);
+    renderDocs(getFilteredDocs());
+    updateStats();
+    // Reset form
+    document.getElementById('docTitle').value = '';
+    document.getElementById('docCategory').value = '';
+    document.getElementById('docYear').value = '';
+    document.getElementById('docDesc').value = '';
+    document.getElementById('pdfFile').value = '';
+    document.getElementById('fileLabel').innerHTML = '<strong>Klik untuk pilih file PDF</strong> atau drag & drop di sini';
+    alert('✅ Dokumen berhasil diunggah!\n\nDokumen akan langsung muncul di daftar arsip.');
+    document.getElementById('dokumen').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // --- STATS COUNTER ---
+  function updateStats() {
+    document.getElementById('count-docs').textContent = documents.length;
+    document.getElementById('count-cat').textContent = [...new Set(documents.map(d => d.category))].length;
+    document.getElementById('count-dl').textContent = documents.reduce((a, d) => a + d.downloads, 0);
+  }
+
+  function animateCount(el, target, duration) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = Math.floor(start);
+      if (start >= target) clearInterval(timer);
+    }, 16);
+  }
+
+  // --- INIT ---
+  renderDocs(documents);
+  setTimeout(() => {
+    animateCount(document.getElementById('count-docs'), documents.length, 1200);
+    animateCount(document.getElementById('count-cat'), [...new Set(documents.map(d => d.category))].length, 1200);
+    animateCount(document.getElementById('count-dl'), documents.reduce((a, d) => a + d.downloads, 0), 1500);
+  }, 600);
+</script>
+</body>
+</html>
